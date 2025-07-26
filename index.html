@@ -180,7 +180,7 @@
     
     <div class="loading-container">
         <div class="logo">
-            <img src="logo.svg" alt="On Trust Logo" onerror="this.innerHTML='<i class=&quot;fas fa-handshake&quot; style=&quot;font-size: 3rem; color: #182439;&quot;></i>'">
+            <img src="./logo.svg" alt="On Trust Logo" onerror="this.innerHTML='<i class=&quot;fas fa-handshake&quot; style=&quot;font-size: 3rem; color: #182439;&quot;></i>'">
         </div>
         
         <div class="loading-text">أون ترَست للخدمات العامة</div>
@@ -191,11 +191,11 @@
         <div id="versionSelector" class="version-selector">
             <p style="margin-bottom: 1rem; color: rgba(255,255,255,0.9);">اختر النسخة المناسبة لجهازك:</p>
             <div class="version-buttons">
-                <a href="desktop.html" class="version-btn">
+                <a href="./desktop.html" class="version-btn">
                     <i class="fas fa-desktop" style="display: block; margin-bottom: 0.5rem; font-size: 1.2rem;"></i>
                     نسخة سطح المكتب
                 </a>
-                <a href="mobile.html" class="version-btn">
+                <a href="./mobile.html" class="version-btn">
                     <i class="fas fa-mobile-alt" style="display: block; margin-bottom: 0.5rem; font-size: 1.2rem;"></i>
                     نسخة الهاتف
                 </a>
@@ -248,7 +248,7 @@
                 deviceType = 'سطح مكتب';
             }
             
-            deviceInfo.textContent = `نوع الجهاز: ${deviceType} | العرض: ${device.width}px`;
+            deviceInfo.innerHTML = `نوع الجهاز: ${deviceType} | العرض: ${device.width}px<br><small>URL: ${window.location.href}</small>`;
         }
 
         // Auto-redirect based on device type
@@ -256,10 +256,10 @@
             setTimeout(() => {
                 if (device.isMobile || (device.isSmallScreen && device.isTouchDevice)) {
                     // Mobile redirect
-                    window.location.href = 'mobile.html';
+                    window.location.href = './mobile.html';
                 } else {
                     // Desktop redirect
-                    window.location.href = 'desktop.html';
+                    window.location.href = './desktop.html';
                 }
             }, 3000); // 3 second delay for loading animation
         }
@@ -292,6 +292,8 @@
         // Initialize
         function init() {
             console.log('Device Info:', device);
+            console.log('Current URL:', window.location.href);
+            console.log('Base URL:', window.location.origin);
             
             // Check if user wants manual selection
             if (checkUserPreference()) {
@@ -383,18 +385,17 @@
         function preloadPages() {
             const desktopLink = document.createElement('link');
             desktopLink.rel = 'prefetch';
-            desktopLink.href = 'desktop.html';
+            desktopLink.href = './desktop.html';
             document.head.appendChild(desktopLink);
             
             const mobileLink = document.createElement('link');
             mobileLink.rel = 'prefetch';
-            mobileLink.href = 'mobile.html';
+            mobileLink.href = './mobile.html';
             document.head.appendChild(mobileLink);
         }
-// ??
+
         // Preload after 2 seconds
         setTimeout(preloadPages, 2000);
     </script>
 </body>
-
 </html>
