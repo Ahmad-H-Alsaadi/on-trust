@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>أون ترَست للخدمات العامة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #6e6e71;
+            background: #fafafa;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #C1C1C1;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+            position: relative;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.2));
+            border-radius: 8px;
+        }
+
+        .mobile-menu-toggle {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: #182439;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-7px, 7px);
+            background: #c4773c;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-7px, -7px);
+            background: #c4773c;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(24, 36, 57, 0.97), rgba(42, 53, 73, 0.95));
+            backdrop-filter: blur(25px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 999;
+            list-style: none;
+            overflow: hidden;
+            padding: 80px 20px 40px;
+        }
+
+        .nav-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.04)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.6;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .nav-menu::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(196, 119, 60, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu .menu-header {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 0;
+        }
+
+        .nav-menu .menu-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-menu .menu-logo img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .nav-menu .menu-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-menu .menu-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .nav-menu a {
+            position: relative;
+            z-index: 2;
+            font-size: 1.3rem;
+            padding: 0;
+            width: 260px;
+            height: 70px;
+            text-align: center;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            flex-shrink: 0;
+            margin: 0;
+            white-space: nowrap;
+            line-height: 1.4;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(196, 119, 60, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-menu a:active::before {
+            left: 100%;
+        }
+
+        .nav-menu a:active {
+            background: rgba(196, 119, 60, 0.2);
+            border-color: rgba(196, 119, 60, 0.4);
+            transform: scale(0.97);
+            box-shadow: 0 15px 40px rgba(196, 119, 60, 0.3);
+        }
+
+        .nav-menu .menu-footer {
+            position: relative;
+            z-index: 2;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .nav-menu .menu-footer p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(24, 36, 57, 0.95), rgba(196, 119, 60, 0.85)), 
+                        linear-gradient(45deg, #fafafa 0%, #f0f0f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            padding: 100px 20px 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.6rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.3rem;
+            color: #fafafa;
+            font-weight: 500;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .hero-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0.95;
+        }
+
+        .hero-tagline {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 3.5rem;
+            color: #182439;
+            letter-spacing: 1px;
+            padding: 0 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            line-height: 1.3;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #182439, #2a3549);
+            color: white;
+            padding: 1.4rem 3rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            box-shadow: 0 12px 30px rgba(24, 36, 57, 0.4);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+            box-shadow: 0 8px 20px rgba(24, 36, 57, 0.6);
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #182439;
+            margin-bottom: 3rem;
+            position: relative;
+            font-weight: 700;
+            line-height: 1.3;
+            padding: 0 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #182439, #c4773c);
+            bottom: -15px;
+            right: 50%;
+            transform: translateX(50%);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+            padding: 0 20px;
+        }
+
+        .about-card {
+            background: linear-gradient(135deg, #ffffff, #fafafa);
+            padding: 2.5rem 2rem;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(24, 36, 57, 0.12);
+            border: 2px solid #f8f9fa;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .about-card:active {
+            transform: scale(0.98);
+        }
+
+        .about-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.8rem;
+            background: linear-gradient(135deg, #182439, #c4773c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(24, 36, 57, 0.15);
+        }
+
+        .about-card h3 {
+            color: #182439;
+            font-size: 1.7rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .about-card p {
+            line-height: 1.8;
+            color: #5a5a5d;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .about-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .about-card li {
+            margin-bottom: 1.3rem;
+            position: relative;
+            padding-left: 1.5rem;
+            color: #5a5a5d;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .about-card li::before {
+            content: '●';
+            color: #c4773c;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.3rem;
+        }
+
+        /* Services Section */
+        .services-intro {
+            text-align: center;
+            max-width: 100%;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .services-intro p {
+            font-size: 1.3rem;
+            color: #6e6e71;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .services-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 0 20px;
+            margin-top: 2.5rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem 1.8rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(24, 36, 57, 0.1);
+            border: 2px solid #f1f3f4;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 15px 35px rgba(24, 36, 57, 0.15);
+        }
+
+        .service-card.selected {
+            border-color: #c4773c;
+            background: linear-gradient(135deg, rgba(196, 119, 60, 0.05), rgba(196, 119, 60, 0.02));
+            box-shadow: 0 15px 35px rgba(196, 119, 60, 0.2);
+            transform: scale(1.02);
+        }
+
+        .service-card h3 {
+            color: #444446;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            font-weight: 500;
+            text-align: center;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .service-card.selected h3 {
+            color: #c4773c;
+            font-weight: 600;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: none;
+            background: linear-gradient(135deg, #182439, #2a3549);
+            color: white;
+            border-radius: 18px;
+            padding: 3rem 2rem;
+            margin: 3rem 20px 0;
+            box-shadow: 0 25px 60px rgba(24, 36, 57, 0.3);
+        }
+
+        .form-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.4;
+            color: white;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            color: #f8f9fa;
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.4rem;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.98);
+            color: #182439;
+            font-family: inherit;
+            box-sizing: border-box;
+            min-height: 60px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            background: white;
+            border-color: #c4773c;
+            box-shadow: 0 0 0 4px rgba(196, 119, 60, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #c4773c, #d4874c);
+            color: white;
+            padding: 1.4rem 3rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: inherit;
+            box-shadow: 0 12px 30px rgba(196, 119, 60, 0.3);
+            width: 100%;
+            margin-top: 1.5rem;
+            min-height: 60px;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 8px 20px rgba(196, 119, 60, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #182439, #2a3549);
+            color: white;
+            padding: 4rem 0 2.5rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3.5rem;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .footer-section h3 {
+            color: #c4773c;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .footer-section p {
+            color: #e9ecef;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .footer-logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.4));
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-company-info h3 {
+            margin-bottom: 0.8rem;
+            color: #c4773c;
+            font-size: 1.6rem;
+        }
+
+        .footer-company-info p:first-of-type {
+            margin: 0;
+            font-size: 1.05rem;
+            color: #e9ecef;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-company-info p:last-of-type {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #c4773c;
+            margin: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: #e9ecef;
+            font-size: 1.8rem;
+            padding: 12px;
+            min-height: 50px;
+            min-width: 50px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-links a:active {
+            background: rgba(196, 119, 60, 0.15);
+            border-color: rgba(196, 119, 60, 0.3);
+            transform: scale(0.95);
+        }
+
+        .social-links a img {
+            width: 28px;
+            height: 28px;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d1d5db;
+            font-size: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide-in {
+            animation: slideInUp 0.5s ease forwards;
+        }
+
+        /* Safe area padding for devices with notches */
+        @supports (padding: max(0px)) {
+            .hero {
+                padding-top: max(100px, env(safe-area-inset-top));
+            }
+            
+            nav {
+                padding-top: max(1rem, env(safe-area-inset-top));
+            }
+        }
+
+        /* Prevent overscroll */
+        html, body {
+            overscroll-behavior: none;
+        }
+
+        /* Optimize scrolling */
+        * {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* iPhone SE and small screens fix */
+        @media (max-width: 380px), (max-height: 670px) {
+            .nav-menu {
+                padding: 60px 20px 20px;
+                gap: 1rem;
+            }
+
+            .nav-menu .menu-header {
+                margin-bottom: 1rem;
+            }
+
+            .nav-menu .menu-logo {
+                width: 60px;
+                height: 60px;
+                margin: 0 auto 1rem;
+            }
+
+            .nav-menu .menu-logo img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .nav-menu .menu-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .nav-menu .menu-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .nav-menu a {
+                width: 240px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+
+            .nav-menu .menu-footer {
+                margin-top: 1rem;
+            }
+
+            .nav-menu .menu-footer p {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.svg" alt="On Trust Logo" onerror="this.style.display='none'">
+            </div>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <div class="menu-header">
+                    <div class="menu-logo">
+                        <img src="logo.svg" alt="On Trust Logo" onerror="this.style.display='none'">
+                    </div>
+                    <div class="menu-title">أون ترَست</div>
+                    <div class="menu-subtitle">معك بثقة في كل خطوة</div>
+                </div>
+                <li><a href="#home" onclick="closeMobileMenu()">الرئيسية</a></li>
+                <li><a href="#about" onclick="closeMobileMenu()">من نحن</a></li>
+                <li><a href="#services" onclick="closeMobileMenu()">خدماتنا</a></li>
+                <li><a href="#contact" onclick="closeMobileMenu()">تواصل معنا</a></li>
+                <div class="menu-footer">
+                    <p>مؤسسة سعودية مرخصة</p>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>أون ترَست للخدمات العامة</h1>
+                <h2>ON TRUST FOR GENERAL SERVICES EST</h2>
+                <h3>مؤسسة سعودية مرخصة</h3>
+                <p class="hero-tagline">معك بثقة في كل خطوة</p>
+                <a href="#services" class="cta-button">اختر خدمتك الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">من نحن</h2>
+            <div class="about-grid">
+                <div class="about-card fade-in">
+                    <div class="about-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>من نحن</h3>
+                    <p><strong>أون ترَست</strong> هي مؤسسة سعودية مرخصة تقدم باقة من <strong>الخدمات العامة</strong>، بخبرة ميدانية واحترافية عالية. نعمل على تيسير الإجراءات وتقديم الحلول المتكاملة للأفراد والشركات، ونلتزم بأعلى معايير الثقة والمصداقية، انطلاقًا من شعارنا: <strong>"معك بثقة في كل خطوة."</strong></p>
+                </div>
+                
+                <div class="about-card fade-in">
+                    <div class="about-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>رؤيتنا</h3>
+                    <p>أن نكون الخيار الأول في المملكة لتقديم الخدمات العامة، من خلال تسهيل المعاملات وتوفير تجربة عميل سلسة وآمنة. نسعى لتحقيق التميز في كل خدمة نقدمها.</p>
+                </div>
+                
+                <div class="about-card fade-in">
+                    <div class="about-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>رسالتنا</h3>
+                    <p>نسعى لتمكين عملائنا من إنجاز مهامهم بسرعة وكفاءة، من خلال خدمات موثوقة، فريق مختص، وتقنيات رقمية تواكب تطورات العصر. نلتزم بتقديم حلول مبتكرة تلبي احتياجات عملائنا.</p>
+                </div>
+                
+                <div class="about-card fade-in">
+                    <div class="about-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>قيمنا الأساسية</h3>
+                    <ul>
+                        <li><strong>الثقة:</strong> هي أساس علاقتنا مع العميل ومحور عملنا</li>
+                        <li><strong>الاحترافية:</strong> نلتزم بالجودة والتميز في كل خطوة</li>
+                        <li><strong>السرعة والدقة:</strong> نوفّر وقتك ونضمن إنجازك بأعلى كفاءة</li>
+                        <li><strong>الخصوصية:</strong> نحمي بياناتك ونصون سريّتها بأمان تام</li>
+                        <li><strong>الابتكار:</strong> نواكب أحدث التقنيات لتطوير خدماتنا</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">خدماتنا</h2>
+            <div class="services-intro">
+                <p>اختر الخدمة التي تحتاجها وسنتولى إنجازها بأعلى مستوى من الاحترافية والدقة</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card slide-in" onclick="selectService('residence', 'إصدار وتجديد الإقامة')">
+                    <h3>إصدار وتجديد الإقامة</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('visa', 'إصدار تأشيرة خروج وعودة / خروج نهائي')">
+                    <h3>إصدار تأشيرة خروج وعودة / خروج نهائي</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('visit', 'تسجيل طلب زيارة عائلية أو شخصية')">
+                    <h3>تسجيل طلب زيارة عائلية أو شخصية</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('commercial', 'إصدار سجل تجاري – حجز اسم تجاري')">
+                    <h3>إصدار سجل تجاري – حجز اسم تجاري</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('electronic', 'إصدار بطاقة الكترونية')">
+                    <h3>إصدار بطاقة إلكترونية</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('mail', 'فتح بريد وطني (سبل)')">
+                    <h3>فتح بريد وطني (سبل)</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('legal', 'خدمات معاملات وموثقة قانونية')">
+                    <h3>خدمات معاملات وموثقة قانونية</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('translation', 'ترجمة معتمدة')">
+                    <h3>ترجمة معتمدة</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('freelance', 'إصدار وثيقة عمل حر')">
+                    <h3>إصدار وثيقة عمل حر</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('platform', 'فتح حساب في منصة')">
+                    <h3>فتح حساب في منصة</h3>
+                </div>
+                
+                <div class="service-card slide-in" onclick="selectService('passport', 'حجز موعد جوازات + فتح حساب بنكي')">
+                    <h3>حجز موعد جوازات + فتح حساب بنكي</h3>
+                </div>
+            </div>
+
+            <div id="serviceForm" class="form-section">
+                <h3>طلب الخدمة: <span id="selectedServiceName"></span></h3>
+                
+                <form id="contactForm" onsubmit="submitForm(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">الاسم الكامل *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">البريد الإلكتروني</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="idNumber">رقم الهوية / الإقامة</label>
+                            <input type="text" id="idNumber" name="idNumber">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceDetails">تفاصيل إضافية عن الخدمة المطلوبة</label>
+                        <textarea id="serviceDetails" name="serviceDetails" rows="4" placeholder="أذكر أي تفاصيل إضافية أو متطلبات خاصة..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency">مستوى الأولوية</label>
+                        <select id="urgency" name="urgency">
+                            <option value="normal">عادي</option>
+                            <option value="urgent">عاجل</option>
+                            <option value="very-urgent">عاجل جداً</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">إرسال الطلب</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo-section">
+                        <img src="logo.svg" alt="On Trust Logo" class="footer-logo" onerror="this.style.display='none'">
+                        <div class="footer-company-info">
+                            <h3>أون ترَست للخدمات العامة</h3>
+                            <p>ON TRUST FOR GENERAL SERVICES EST</p>
+                            <p>معك بثقة في كل خطوة</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>وسائل التواصل الاجتماعي</h3>
+                    <div class="social-links">
+                        <a href="https://api.whatsapp.com/send/?phone=966509785540&text&type=phone_number&app_absent=0" target="_blank" title="واتساب">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ontrust.gs/" target="_blank" title="انستجرام">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@ontrust.gs" target="_blank" title="تيك توك">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.snapchat.com/@ontrust.gs" target="_blank" title="سناب شات">
+                            <i class="fab fa-snapchat"></i>
+                        </a>
+                        <a href="https://x.com/ontrust_gs" target="_blank" title="X">
+                            <img src="x.png" alt="X" onerror="this.parentElement.innerHTML='<i class=&quot;fab fa-twitter&quot;></i>'">
+                        </a>
+                        <a href="https://t.me/+AtUluPAxVf1mYzJk" target="_blank" title="تيليجرام">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات إضافية</h3>
+                    <a href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=fEKEtdlIeAnNfz+eFev6Vw==" target="_blank" style="color: #cdcdce; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease;">
+                        السجل التجاري السعودي
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 أون ترَست للخدمات العامة. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedService = '';
+
+        function toggleMobileMenu() {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Prevent body scrolling when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMobileMenu() {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function selectService(serviceId, serviceName) {
+            // Remove previous selection
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Add selection to clicked service
+            event.currentTarget.classList.add('selected');
+
+            // Store selected service
+            selectedService = serviceId;
+            document.getElementById('selectedServiceName').textContent = serviceName;
+
+            // Show form with animation
+            const form = document.getElementById('serviceForm');
+            form.style.display = 'block';
+            form.classList.add('slide-in');
+
+            // Smooth scroll to form
+            setTimeout(() => {
+                form.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            data.selectedService = selectedService;
+            data.serviceName = document.getElementById('selectedServiceName').textContent;
+
+            // Create WhatsApp message
+            const message = `
+مرحباً، أريد طلب خدمة من أون ترَست:
+
+الخدمة المطلوبة: ${data.serviceName}
+الاسم: ${data.fullName}
+رقم الهاتف: ${data.phone}
+البريد الإلكتروني: ${data.email || 'غير محدد'}
+رقم الهوية/الإقامة: ${data.idNumber || 'غير محدد'}
+مستوى الأولوية: ${data.urgency === 'normal' ? 'عادي' : data.urgency === 'urgent' ? 'عاجل' : 'عاجل جداً'}
+التفاصيل الإضافية: ${data.serviceDetails || 'لا توجد'}
+            `.trim();
+
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=966509785540&text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            // Show success message
+            alert('تم إرسال طلبك بنجاح! سيتم توجيهك إلى واتساب للمتابعة.');
+
+            // Reset form
+            event.target.reset();
+            document.getElementById('serviceForm').style.display = 'none';
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(193, 193, 193, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+                header.style.boxShadow = '0 6px 25px rgba(0,0,0,0.2)';
+            } else {
+                header.style.background = '#C1C1C1';
+                header.style.backdropFilter = 'none';
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (navMenu.classList.contains('active') && 
+                !navMenu.contains(event.target) && 
+                !menuToggle.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on orientation change
+        window.addEventListener('orientationchange', function() {
+            closeMobileMenu();
+        });
+
+        // Optimize scroll performance
+        let ticking = false;
+        function updateScroll() {
+            // Handle scroll-based animations here if needed
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateScroll);
+                ticking = true;
+            }
+        });
+
+        // Touch feedback for iOS
+        if (navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)) {
+            document.addEventListener('touchstart', function() {}, true);
+        }
+
+        // Prevent zoom on form inputs (iOS)
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                if (window.innerWidth < 768) {
+                    // Temporarily increase font size to prevent zoom
+                    input.style.fontSize = '16px';
+                }
+            });
+            
+            input.addEventListener('blur', function() {
+                // Reset font size
+                input.style.fontSize = '';
+            });
+        });
+
+        // Intersection Observer for animations (lightweight)
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe fade-in elements
+            document.querySelectorAll('.fade-in, .slide-in').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أون ترَست للخدمات العامة - ON TRUST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Roboto', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #6e6e71;
+            background: #fafafa;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #C1C1C1, #d4d4d4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        header.scrolled {
+            background: linear-gradient(135deg, rgba(193, 193, 193, 0.95), rgba(212, 212, 212, 0.95));
+            backdrop-filter: blur(25px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .logo img {
+            height: 140px;
+            width: auto;
+            filter: drop-shadow(0 8px 25px rgba(0,0,0,0.3));
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+        }
+
+        .logo img:hover {
+            transform: scale(1.08) rotate(2deg);
+            filter: drop-shadow(0 12px 35px rgba(0,0,0,0.4));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 4rem;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #182439;
+            font-weight: 600;
+            font-size: 1.3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 16px 32px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(24, 36, 57, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+            background: linear-gradient(135deg, #182439, #2a3549);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(24, 36, 57, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(24, 36, 57, 0.97), rgba(196, 119, 60, 0.87)), 
+                        radial-gradient(ellipse at center, #fafafa 0%, #e8e8e8 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            margin-top: 0;
+            padding-top: 140px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="80" cy="40" r="0.5" fill="rgba(255,255,255,0.02)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.025)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            color: #fafafa;
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 4rem;
+            font-weight: 400;
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .hero-tagline {
+            padding: 0 3rem;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 6rem;
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
+            color: #182439;
+            display: inline-block;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            padding: 1rem 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #182439, #2a3549, #3a4559);
+            color: white;
+            padding: 2rem 5rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both;
+            font-weight: 600;
+            box-shadow: 0 15px 40px rgba(24, 36, 57, 0.5);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 2px;
+            vertical-align: baseline;
+            margin-top: 0;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #0f1a2a, #1f2d3f, #2f3d4f);
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(24, 36, 57, 0.7);
+        }
+
+        /* Sections */
+        .section {
+            padding: 8rem 0;
+            background: white;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e9ecef, transparent);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            color: #182439;
+            margin-bottom: 6rem;
+            position: relative;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(90deg, #182439, #c4773c, #182439);
+            bottom: -25px;
+            right: 50%;
+            transform: translateX(50%);
+            border-radius: 3px;
+            box-shadow: 0 4px 15px rgba(196, 119, 60, 0.3);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            margin-top: 5rem;
+            padding: 0 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-card {
+            background: linear-gradient(135deg, #ffffff, #fafafa);
+            padding: 4rem;
+            border-radius: 25px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 60px rgba(24, 36, 57, 0.12);
+            border: 3px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(196, 119, 60, 0.08) 0%, transparent 70%);
+            transition: transform 0.8s ease;
+            transform: scale(0);
+        }
+
+        .about-card:hover::before {
+            transform: scale(1);
+        }
+
+        .about-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(24, 36, 57, 0.25);
+            border-color: #c4773c;
+        }
+
+        .about-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 3rem;
+            background: linear-gradient(135deg, #182439, #c4773c, #182439);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 15px 40px rgba(24, 36, 57, 0.3);
+        }
+
+        .about-card:hover .about-icon {
+            transform: scale(1.15) rotate(360deg);
+            box-shadow: 0 25px 60px rgba(196, 119, 60, 0.5);
+        }
+
+        .about-card h3 {
+            color: #182439;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        .about-card p {
+            line-height: 2;
+            color: #6e6e71;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            text-align: right;
+        }
+
+        .about-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: right;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-card li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-right: 3rem;
+            color: #6e6e71;
+            line-height: 2;
+            font-size: 1.15rem;
+            transition: all 0.4s ease;
+        }
+
+        .about-card li:hover {
+            color: #182439;
+            transform: translateX(-10px);
+        }
+
+        .about-card li::before {
+            content: '●';
+            color: #c4773c;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 2rem;
+            transition: all 0.4s ease;
+        }
+
+        .about-card li:hover::before {
+            transform: scale(1.3) rotate(180deg);
+            color: #182439;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 0 3rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #ffffff, #fafafa);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(24, 36, 57, 0.1);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #e9ecef;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(196, 119, 60, 0.08), rgba(196, 119, 60, 0.03));
+            transition: right 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            right: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 70px rgba(24, 36, 57, 0.2);
+            border-color: #c4773c;
+        }
+
+        .service-card.selected {
+            border-color: #c4773c;
+            background: linear-gradient(135deg, rgba(196, 119, 60, 0.08), rgba(196, 119, 60, 0.03));
+            box-shadow: 0 30px 70px rgba(196, 119, 60, 0.3);
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .service-card h3 {
+            color: #6e6e71;
+            font-size: 1.4rem;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-weight: 500;
+            line-height: 1.6;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover h3,
+        .service-card.selected h3 {
+            color: #c4773c;
+            font-weight: 700;
+            transform: scale(1.05);
+        }
+
+        /* Form Section */
+        .form-section {
+            display: none;
+            background: linear-gradient(135deg, #182439, #2a3549, #3a4559);
+            color: white;
+            border-radius: 30px;
+            padding: 5rem;
+            margin: 5rem 3rem 0;
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 40px 100px rgba(24, 36, 57, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .form-section h3 {
+            margin-bottom: 4rem;
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            color: #fafafa;
+            font-size: 1.2rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 2rem;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.95);
+            color: #182439;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            background: white;
+            border-color: #c4773c;
+            box-shadow: 0 0 0 5px rgba(196, 119, 60, 0.2);
+            transform: translateY(-3px) scale(1.01);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #c4773c, #d4874c, #e4975c);
+            color: white;
+            padding: 2rem 5rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-family: inherit;
+            box-shadow: 0 15px 40px rgba(196, 119, 60, 0.4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 2px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #b86530, #c6773a, #d4844a);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(196, 119, 60, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #182439, #2a3549, #3a4559);
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.4;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6rem;
+            margin-bottom: 5rem;
+            padding: 0 3rem;
+            justify-items: center;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section {
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-section h3 {
+            color: #c4773c;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-section p {
+            color: #e9ecef;
+            line-height: 2;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 8px 25px rgba(0,0,0,0.5));
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .footer-logo:hover {
+            transform: scale(1.05) rotate(2deg);
+            filter: drop-shadow(0 12px 35px rgba(0,0,0,0.7));
+        }
+
+        .footer-company-info h3 {
+            margin-bottom: 1.5rem;
+            color: #c4773c;
+            font-size: 2.2rem;
+        }
+
+        .footer-company-info p:first-of-type {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #e9ecef;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-company-info p:last-of-type {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #c4773c;
+            margin: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .social-links a {
+            color: #e9ecef;
+            font-size: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            color: #c4773c;
+            transform: translateY(-8px) scale(1.1) rotate(5deg);
+            background: rgba(196, 119, 60, 0.15);
+            border-color: rgba(196, 119, 60, 0.3);
+            box-shadow: 0 15px 40px rgba(196, 119, 60, 0.3);
+        }
+
+        .social-links a img {
+            width: 40px;
+            height: 40px;
+            filter: brightness(0) invert(1);
+            transition: all 0.4s ease;
+        }
+
+        .social-links a:hover img {
+            filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(18deg) brightness(118%) contrast(119%);
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 4rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            color: #e9ecef;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #182439, #c4773c);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #c4773c, #182439);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.svg" alt="On Trust Logo" onerror="this.style.display='none'">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#services">خدماتنا</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>أون ترَست للخدمات العامة</h1>
+                <h2>ON TRUST FOR GENERAL SERVICES EST</h2>
+                <h3>مؤسسة سعودية مرخصة</h3>
+                <p class="hero-tagline">معك بثقة في كل خطوة</p>
+                <a href="#services" class="cta-button">اختر خدمتك الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container" style="margin-top: 0;">
+        <section id="about" class="section">
+            <h2 class="section-title animate-on-scroll">من نحن</h2>
+            <div class="about-grid">
+                <div class="about-card animate-on-scroll">
+                    <div class="about-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>من نحن</h3>
+                    <p><strong>أون ترَست</strong> هي مؤسسة سعودية مرخصة تقدم باقة من <strong>الخدمات العامة</strong>، بخبرة ميدانية واحترافية عالية. نعمل على تيسير الإجراءات وتقديم الحلول المتكاملة للأفراد والشركات، ونلتزم بأعلى معايير الثقة والمصداقية، انطلاقًا من شعارنا: <strong>"معك بثقة في كل خطوة."</strong></p>
+                </div>
+                
+                <div class="about-card animate-on-scroll">
+                    <div class="about-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>رؤيتنا</h3>
+                    <p>أن نكون الخيار الأول في المملكة لتقديم الخدمات العامة، من خلال تسهيل المعاملات وتوفير تجربة عميل سلسة وآمنة. نسعى لتحقيق التميز في كل خدمة نقدمها.</p>
+                </div>
+                
+                <div class="about-card animate-on-scroll">
+                    <div class="about-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>رسالتنا</h3>
+                    <p>نسعى لتمكين عملائنا من إنجاز مهامهم بسرعة وكفاءة، من خلال خدمات موثوقة، فريق مختص، وتقنيات رقمية تواكب تطورات العصر. نلتزم بتقديم حلول مبتكرة تلبي احتياجات عملائنا.</p>
+                </div>
+                
+                <div class="about-card animate-on-scroll">
+                    <div class="about-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>قيمنا الأساسية</h3>
+                    <ul>
+                        <li><strong>الثقة:</strong> هي أساس علاقتنا مع العميل ومحور عملنا</li>
+                        <li><strong>الاحترافية:</strong> نلتزم بالجودة والتميز في كل خطوة</li>
+                        <li><strong>السرعة والدقة:</strong> نوفّر وقتك ونضمن إنجازك بأعلى كفاءة</li>
+                        <li><strong>الخصوصية:</strong> نحمي بياناتك ونصون سريّتها بأمان تام</li>
+                        <li><strong>الابتكار:</strong> نواكب أحدث التقنيات لتطوير خدماتنا</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <h2 class="section-title animate-on-scroll">خدماتنا</h2>
+            <div style="text-align: center; max-width: 1000px; margin: 0 auto 4rem;" class="animate-on-scroll">
+                <p style="font-size: 1.5rem; color: #6e6e71; line-height: 1.8; margin-bottom: 2rem;">اختر الخدمة التي تحتاجها وسنتولى إنجازها بأعلى مستوى من الاحترافية والدقة</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll" onclick="selectService('residence', 'إصدار وتجديد الإقامة')">
+                    <h3>إصدار وتجديد الإقامة</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('visa', 'إصدار تأشيرة خروج وعودة / خروج نهائي')">
+                    <h3>إصدار تأشيرة خروج وعودة / خروج نهائي</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('visit', 'تسجيل طلب زيارة عائلية أو شخصية')">
+                    <h3>تسجيل طلب زيارة عائلية أو شخصية</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('commercial', 'إصدار سجل تجاري – حجز اسم تجاري')">
+                    <h3>إصدار سجل تجاري – حجز اسم تجاري</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('electronic', 'إصدار بطاقة الكترونية')">
+                    <h3>إصدار بطاقة إلكترونية</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('mail', 'فتح بريد وطني (سبل)')">
+                    <h3>فتح بريد وطني (سبل)</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('legal', 'خدمات معاملات وموثقة قانونية')">
+                    <h3>خدمات معاملات وموثقة قانونية</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('translation', 'ترجمة معتمدة')">
+                    <h3>ترجمة معتمدة</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('freelance', 'إصدار وثيقة عمل حر')">
+                    <h3>إصدار وثيقة عمل حر</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('platform', 'فتح حساب في منصة')">
+                    <h3>فتح حساب في منصة</h3>
+                </div>
+                
+                <div class="service-card animate-on-scroll" onclick="selectService('passport', 'حجز موعد جوازات + فتح حساب بنكي')">
+                    <h3>حجز موعد جوازات + فتح حساب بنكي</h3>
+                </div>
+            </div>
+
+            <div id="serviceForm" class="form-section">
+                <h3 style="margin-bottom: 3rem; text-align: center; font-size: 2.5rem;">طلب الخدمة: <span id="selectedServiceName"></span></h3>
+                
+                <form id="contactForm" onsubmit="submitForm(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">الاسم الكامل *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">البريد الإلكتروني</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="idNumber">رقم الهوية / الإقامة</label>
+                            <input type="text" id="idNumber" name="idNumber">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceDetails">تفاصيل إضافية عن الخدمة المطلوبة</label>
+                        <textarea id="serviceDetails" name="serviceDetails" rows="5" placeholder="أذكر أي تفاصيل إضافية أو متطلبات خاصة..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency">مستوى الأولوية</label>
+                        <select id="urgency" name="urgency">
+                            <option value="normal">عادي</option>
+                            <option value="urgent">عاجل</option>
+                            <option value="very-urgent">عاجل جداً</option>
+                        </select>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 3rem;">
+                        <button type="submit" class="submit-btn">إرسال الطلب</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo-section">
+                        <img src="logo.svg" alt="On Trust Logo" class="footer-logo" onerror="this.style.display='none'">
+                        <div class="footer-company-info">
+                            <h3>أون ترَست للخدمات العامة</h3>
+                            <p>ON TRUST FOR GENERAL SERVICES EST</p>
+                            <p>معك بثقة في كل خطوة</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>وسائل التواصل الاجتماعي</h3>
+                    <div class="social-links">
+                        <a href="https://api.whatsapp.com/send/?phone=966509785540&text&type=phone_number&app_absent=0" target="_blank" title="واتساب">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ontrust.gs/" target="_blank" title="انستجرام">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@ontrust.gs" target="_blank" title="تيك توك">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.snapchat.com/@ontrust.gs" target="_blank" title="سناب شات">
+                            <i class="fab fa-snapchat"></i>
+                        </a>
+                        <a href="https://x.com/ontrust_gs" target="_blank" title="X">
+                            <img src="x.png" alt="X" onerror="this.parentElement.innerHTML='<i class=&quot;fab fa-twitter&quot;></i>'">
+                        </a>
+                        <a href="https://t.me/+AtUluPAxVf1mYzJk" target="_blank" title="تيليجرام">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات إضافية</h3>
+                    <a href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=fEKEtdlIeAnNfz+eFev6Vw==" target="_blank" style="color: #cdcdce; text-decoration: none; font-size: 1.2rem; transition: color 0.3s ease;">
+                        السجل التجاري السعودي
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 أون ترَست للخدمات العامة. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedService = '';
+
+        function selectService(serviceId, serviceName) {
+            // Remove previous selection
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Add selection to clicked service
+            event.currentTarget.classList.add('selected');
+
+            // Store selected service
+            selectedService = serviceId;
+            document.getElementById('selectedServiceName').textContent = serviceName;
+
+            // Show form
+            document.getElementById('serviceForm').style.display = 'block';
+
+            // Smooth scroll to form
+            document.getElementById('serviceForm').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            data.selectedService = selectedService;
+            data.serviceName = document.getElementById('selectedServiceName').textContent;
+
+            // Create WhatsApp message
+            const message = `
+مرحباً، أريد طلب خدمة من أون ترَست:
+
+الخدمة المطلوبة: ${data.serviceName}
+الاسم: ${data.fullName}
+رقم الهاتف: ${data.phone}
+البريد الإلكتروني: ${data.email || 'غير محدد'}
+رقم الهوية/الإقامة: ${data.idNumber || 'غير محدد'}
+مستوى الأولوية: ${data.urgency === 'normal' ? 'عادي' : data.urgency === 'urgent' ? 'عاجل' : 'عاجل جداً'}
+التفاصيل الإضافية: ${data.serviceDetails || 'لا توجد'}
+            `.trim();
+
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=966509785540&text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            // Show success message
+            alert('تم إرسال طلبك بنجاح! سيتم توجيهك إلى واتساب للمتابعة.');
+
+            // Reset form
+            event.target.reset();
+            document.getElementById('serviceForm').style.display = 'none';
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Enhanced cursor effects for desktop
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'cursor';
+                newCursor.style.cssText = `
+                    position: fixed;
+                    width: 20px;
+                    height: 20px;
+                    background: linear-gradient(135deg, #c4773c, #182439);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    transition: transform 0.3s ease;
+                    mix-blend-mode: difference;
+                `;
+                document.body.appendChild(newCursor);
+            }
+            
+            const cursor2 = document.querySelector('.cursor');
+            cursor2.style.left = e.clientX - 10 + 'px';
+            cursor2.style.top = e.clientY - 10 + 'px';
+        });
+
+        // Enhanced hover effects for interactive elements
+        document.querySelectorAll('a, button, .service-card, .about-card').forEach(el => {
+            el.addEventListener('mouseenter', function() {
+                const cursor = document.querySelector('.cursor');
+                if (cursor) {
+                    cursor.style.transform = 'scale(2)';
+                }
+            });
+            
+            el.addEventListener('mouseleave', function() {
+                const cursor = document.querySelector('.cursor');
+                if (cursor) {
+                    cursor.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
