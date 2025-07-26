@@ -83,7 +83,7 @@
         .version-selector {
             display: none;
             opacity: 0;
-            animation: fadeIn 1s ease 2s forwards;
+            animation: fadeIn 1s ease 1.5s forwards;
         }
 
         .version-buttons {
@@ -171,6 +171,17 @@
             
             .version-btn {
                 width: 200px;
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .version-selector {
+                animation: fadeIn 1s ease 1s forwards;
+            }
+            
+            .version-selector p {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
             }
         }
     </style>
@@ -214,21 +225,26 @@
             const width = window.innerWidth;
             const height = window.innerHeight;
             
-            // Check for mobile devices
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-            const isTablet = /iPad|Android(?=.*\bMobile\b)(?=.*\bTablet\b)|KFAPWI|Kindle/i.test(userAgent);
+            // More comprehensive mobile detection
+            const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(userAgent);
+            const isTabletUA = /iPad|Android(?=.*Tablet)|KFAPWI|Kindle/i.test(userAgent);
             const isSmallScreen = width <= 768;
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
             
+            // Enhanced detection
+            const isMobile = (isMobileUA && !isTabletUA) || (isSmallScreen && isTouchDevice);
+            const isTablet = isTabletUA || (width > 768 && width <= 1024 && isTouchDevice);
+            const isDesktop = !isMobile && !isTablet;
+            
             return {
-                isMobile: isMobile && !isTablet,
+                isMobile: isMobile,
                 isTablet: isTablet,
-                isDesktop: !isMobile && !isTablet,
+                isDesktop: isDesktop,
                 isSmallScreen: isSmallScreen,
                 isTouchDevice: isTouchDevice,
                 width: width,
                 height: height,
-                userAgent: userAgent
+                userAgent: userAgent.substring(0, 50) + '...'
             };
         }
 
@@ -241,27 +257,32 @@
             let deviceType = 'غير محدد';
             
             if (device.isMobile) {
-                deviceType = 'هاتف محمول';
+                deviceType = '📱 هاتف محمول';
             } else if (device.isTablet) {
-                deviceType = 'جهاز لوحي';
+                deviceType = '📱 جهاز لوحي';
             } else if (device.isDesktop) {
-                deviceType = 'سطح مكتب';
+                deviceType = '🖥️ سطح مكتب';
             }
             
-            deviceInfo.innerHTML = `نوع الجهاز: ${deviceType} | العرض: ${device.width}px<br><small>URL: ${window.location.href}</small>`;
+            deviceInfo.innerHTML = `
+                <strong>${deviceType}</strong><br>
+                العرض: ${device.width}px | اللمس: ${device.isTouchDevice ? 'نعم' : 'لا'}<br>
+                <small>UA: ${device.userAgent}</small>
+            `;
         }
 
         // Auto-redirect based on device type
         function autoRedirect() {
             setTimeout(() => {
-                if (device.isMobile || (device.isSmallScreen && device.isTouchDevice)) {
-                    // Mobile redirect
+                console.log('Auto-redirecting...', device);
+                if (device.isMobile || device.isSmallScreen) {
+                    console.log('Redirecting to mobile...');
                     window.location.href = './mobile.html';
                 } else {
-                    // Desktop redirect
+                    console.log('Redirecting to desktop...');
                     window.location.href = './desktop.html';
                 }
-            }, 3000); // 3 second delay for loading animation
+            }, 2000); // Reduced to 2 seconds
         }
 
         // Show manual selector if needed
@@ -272,7 +293,11 @@
                 
                 // Update device info
                 updateDeviceInfo();
-            }, 2500);
+                
+                // Change loading text
+                const loadingText = document.querySelector('.loading-text');
+                loadingText.textContent = 'اختر النسخة المناسبة';
+            }, 1500); // Show earlier
         }
 
         // Check if user has manual override preference
@@ -295,6 +320,13 @@
             console.log('Current URL:', window.location.href);
             console.log('Base URL:', window.location.origin);
             
+            // Immediate redirect for obvious mobile devices
+            if (device.width <= 480 || /iPhone|Android.*Mobile/i.test(navigator.userAgent)) {
+                console.log('Immediate mobile redirect');
+                window.location.href = './mobile.html';
+                return;
+            }
+            
             // Check if user wants manual selection
             if (checkUserPreference()) {
                 showSelector();
@@ -302,10 +334,8 @@
                 // Auto-redirect with fallback to manual selector
                 autoRedirect();
                 
-                // Show selector as backup after 4 seconds
-                setTimeout(() => {
-                    showSelector();
-                }, 4000);
+                // Show selector as backup
+                showSelector();
             }
             
             // Handle orientation change
