@@ -225,16 +225,19 @@
             const width = window.innerWidth;
             const height = window.innerHeight;
             
-            // More comprehensive mobile detection
-            const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(userAgent);
-            const isTabletUA = /iPad|Android(?=.*Tablet)|KFAPWI|Kindle/i.test(userAgent);
-            const isSmallScreen = width <= 768;
+            // Very aggressive mobile detection
+            const mobileKeywords = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Phone|Touch/i;
+            const tabletKeywords = /iPad|Tablet|KFAPWI|Kindle/i;
+            
+            const isMobileUA = mobileKeywords.test(userAgent);
+            const isTabletUA = tabletKeywords.test(userAgent);
+            const isSmallScreen = width <= 900; // Increased threshold
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
             
-            // Enhanced detection
-            const isMobile = (isMobileUA && !isTabletUA) || (isSmallScreen && isTouchDevice);
-            const isTablet = isTabletUA || (width > 768 && width <= 1024 && isTouchDevice);
-            const isDesktop = !isMobile && !isTablet;
+            // Force mobile for common scenarios
+            const isMobile = isMobileUA || (isSmallScreen && isTouchDevice) || width <= 768;
+            const isTablet = isTabletUA && !isMobileUA;
+            const isDesktop = !isMobile && !isTablet && width > 900;
             
             return {
                 isMobile: isMobile,
@@ -253,21 +256,31 @@
         
         // Update device info display
         function updateDeviceInfo() {
-            const deviceInfo = document.getElementById('deviceInfo');
+            const testInfo = document.getElementById('testInfo');
             let deviceType = 'غير محدد';
+            let shouldRedirect = 'لا';
             
             if (device.isMobile) {
                 deviceType = '📱 هاتف محمول';
+                shouldRedirect = 'نعم - للمحمول';
             } else if (device.isTablet) {
                 deviceType = '📱 جهاز لوحي';
+                shouldRedirect = 'نعم - للمحمول';
             } else if (device.isDesktop) {
                 deviceType = '🖥️ سطح مكتب';
+                shouldRedirect = 'نعم - لسطح المكتب';
             }
             
-            deviceInfo.innerHTML = `
+            // Check if should force mobile
+            const forceRedirect = device.width <= 900 || 
+                                /Android|iPhone|iPod|Mobile|Phone/i.test(navigator.userAgent) ||
+                                device.isTouchDevice;
+            
+            testInfo.innerHTML = `
                 <strong>${deviceType}</strong><br>
                 العرض: ${device.width}px | اللمس: ${device.isTouchDevice ? 'نعم' : 'لا'}<br>
-                <small>UA: ${device.userAgent}</small>
+                التوجيه التلقائي: ${forceRedirect ? '📱 محمول' : '🖥️ سطح مكتب'}<br>
+                <small style="word-break: break-all;">UA: ${device.userAgent}</small>
             `;
         }
 
@@ -296,8 +309,12 @@
                 
                 // Change loading text
                 const loadingText = document.querySelector('.loading-text');
-                loadingText.textContent = 'اختر النسخة المناسبة';
-            }, 1500); // Show earlier
+                if (device.width <= 900) {
+                    loadingText.textContent = 'يجب أن تنتقل للنسخة المحمولة...';
+                } else {
+                    loadingText.textContent = 'اختر النسخة المناسبة';
+                }
+            }, 500); // Show faster
         }
 
         // Check if user has manual override preference
@@ -317,26 +334,22 @@
         // Initialize
         function init() {
             console.log('Device Info:', device);
-            console.log('Current URL:', window.location.href);
-            console.log('Base URL:', window.location.origin);
+            console.log('Screen Width:', device.width);
+            console.log('User Agent:', navigator.userAgent);
             
-            // Immediate redirect for obvious mobile devices
-            if (device.width <= 480 || /iPhone|Android.*Mobile/i.test(navigator.userAgent)) {
-                console.log('Immediate mobile redirect');
+            // VERY aggressive mobile redirect
+            if (device.width <= 900 || 
+                /Android|iPhone|iPod|Mobile|Phone/i.test(navigator.userAgent) ||
+                device.isTouchDevice) {
+                
+                console.log('FORCING MOBILE REDIRECT');
+                // Immediate redirect - no delay
                 window.location.href = './mobile.html';
                 return;
             }
             
-            // Check if user wants manual selection
-            if (checkUserPreference()) {
-                showSelector();
-            } else {
-                // Auto-redirect with fallback to manual selector
-                autoRedirect();
-                
-                // Show selector as backup
-                showSelector();
-            }
+            // Show selector immediately for debugging
+            showSelector();
             
             // Handle orientation change
             window.addEventListener('orientationchange', function() {
